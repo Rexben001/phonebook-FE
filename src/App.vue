@@ -21,4 +21,11 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+@media screen and (min-width: 600px) {
+  #app {
+    width: 500px;
+    margin: 0 auto;
+  }
+}
 </style>

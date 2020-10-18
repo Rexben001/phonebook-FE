@@ -170,4 +170,13 @@ input:focus {
 .total > span {
   color: rgb(143, 143, 143);
 }
+@media screen and (min-width: 600px) {
+  .hello {
+    width: 600px;
+    margin: 0 auto;
+  }
+  .head {
+    width: 600px;
+  }
+}
 </style>
