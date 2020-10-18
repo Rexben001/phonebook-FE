@@ -95,11 +95,12 @@ p {
 .search {
   border: 1px solid #ddd;
   color: rgb(81, 81, 81);
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   padding: 1rem;
   border-radius: 8px;
+  margin-left: 15px;
 }
 
 .search > input {
