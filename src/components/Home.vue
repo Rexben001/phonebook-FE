@@ -3,7 +3,14 @@
     <div class="head">
       <h1>ZIGS Phonebook</h1>
       <div class="search">
-        <input placeholder="Search for contacts..." />
+        <input
+          placeholder="Search for contacts..."
+          v-model="search"
+          id="search"
+          @change="searchResults"
+          type="text"
+          v-on:input="searchResults"
+        />
         <i class="fa fa-search"></i>
       </div>
     </div>
@@ -29,7 +36,7 @@
 
 <script>
 import axios from 'axios';
-// import Fuse from 'fuse.js';
+import Fuse from 'fuse.js';
 
 export default {
   name: 'Home',
@@ -38,8 +45,10 @@ export default {
   },
   data: function() {
     return {
-      values: '',
+      values: [],
       isLoading: false,
+      search: '',
+      allValues: [],
     };
   },
   async mounted() {
@@ -49,9 +58,33 @@ export default {
     );
 
     if (data.success) {
-      console.log(data.data);
       this.values = data.data;
+      this.allValues = data.data;
     }
+  },
+  methods: {
+    searchResults: function() {
+      if (this.search.length > 2) {
+        const fuse = new Fuse(this.allValues, {
+          shouldSort: true,
+          threshold: 0.3,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 12,
+          minMatchCharLength: 3,
+          findAllMatches: true,
+          keys: ['Number', 'Email', 'Name'],
+        });
+        let result = fuse.search(this.search);
+
+        result = result?.map(({ item }) => item);
+
+        if (result.length) this.values = result;
+        else this.allValues;
+      } else {
+        this.values = this.allValues;
+      }
+    },
   },
 };
 </script>
