@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div class="head">
-      <h1>{{ msg }}</h1>
+      <h1>ZIGS Phonebook</h1>
       <div class="search">
         <input placeholder="Search for contacts..." />
         <i class="fa fa-search"></i>
@@ -9,55 +9,48 @@
     </div>
 
     <div class="contacts">
-      <div class="info">
-        <img
-          src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-        />
-        <div>
-          <p><i class="fa fa-user-circle"></i> Rex Ben</p>
-          <p><i class="fa fa-envelope"></i> rexben.rb@gmail.com</p>
-          <p><i class="fa fa-phone"></i> 2347032716134</p>
-        </div>
-      </div>
-      <div class="info">
-        <img
-          src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-        />
-        <div>
-          <p><i class="fa fa-user-circle"></i> Rex Ben</p>
-          <p><i class="fa fa-envelope"></i> rexben.rb@gmail.com</p>
-          <p><i class="fa fa-phone"></i> 2347032716134</p>
-        </div>
-      </div>
-      <div class="info">
-        <img
-          src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-        />
-        <div>
-          <p><i class="fa fa-user-circle"></i> Rex Ben</p>
-          <p><i class="fa fa-envelope"></i> rexben.rb@gmail.com</p>
-          <p><i class="fa fa-phone"></i> 2347032716134</p>
-        </div>
-      </div>
-      <div class="info">
-        <img
-          src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-        />
-        <div>
-          <p><i class="fa fa-user-circle"></i> Rex Ben</p>
-          <p><i class="fa fa-envelope"></i> rexben.rb@gmail.com</p>
-          <p><i class="fa fa-phone"></i> 2347032716134</p>
-        </div>
+      <div v-bind:key="contact.ID" v-for="contact in values">
+        <router-link :to="`/details/${contact.ID}`" class="info">
+          <img :src="contact.Image" />
+          <div>
+            <p><i class="fa fa-user-circle"></i> {{ contact.Name }}</p>
+            <p><i class="fa fa-envelope"></i> {{ contact.Email }}</p>
+            <p>
+              <a :href="`tel:${contact.Number}`">
+                <i class="fa fa-phone"></i> {{ contact.Number }}</a
+              >
+            </p>
+          </div>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: "Home",
+  name: 'Home',
   props: {
     msg: String,
+  },
+  data: function() {
+    return {
+      values: '',
+      isLoading: false,
+    };
+  },
+  async mounted() {
+    this.isLoading = true;
+    const { data } = await axios.get(
+      'https://phone-book-rexben.herokuapp.com/contacts'
+    );
+
+    if (data.success) {
+      console.log(data.data);
+      this.values = data.data;
+    }
   },
 };
 </script>
@@ -76,16 +69,16 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  text-decoration: none;
+  color: inherit;
 }
 .info {
   display: flex;
   width: 100%;
-  justify-content: space-around;
-  padding-top: 1rem;
+  justify-content: space-evenly;
   border-radius: 8px;
-  box-shadow: 10px 10px 10px #ddd;
-  margin: 1rem 0;
+  box-shadow: 3px 3px 5px 6px#ddd;
+  margin: 1.5rem 0;
 }
 img {
   width: 40%;

@@ -1,16 +1,10 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <Home msg="ZIGS Phonebook" />
+  <router-view></router-view>
 </template>
 
 <script>
-import Home from "./components/Home.vue";
-
 export default {
-  name: "App",
-  components: {
-    Home,
-  },
+  name: 'App',
 };
 </script>
 
@@ -22,5 +16,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>
