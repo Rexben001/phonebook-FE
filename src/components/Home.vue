@@ -16,6 +16,9 @@
     </div>
 
     <div class="contacts">
+      <p class="total">
+        Total Contacts<span> ({{ values.length }})</span>
+      </p>
       <div v-bind:key="contact.ID" v-for="contact in values">
         <router-link :to="`/details/${contact.ID}`" class="info">
           <img :src="contact.Image" />
@@ -157,5 +160,14 @@ input:focus {
   background: white;
   width: 100%;
   box-sizing: border-box;
+}
+.total {
+  font-weight: bold;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.total > span {
+  color: rgb(143, 143, 143);
 }
 </style>
