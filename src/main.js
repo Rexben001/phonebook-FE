@@ -4,12 +4,14 @@ import App from './App.vue';
 import Details from './components/Details.vue';
 import Home from './components/Home.vue';
 import Create from './components/Create.vue';
+import Login from './components/Login.vue';
 
 const routes = [
   { path: '/details/:id', component: Details, name: 'Details' },
   { path: '/create', component: Create, name: 'Create' },
+  { path: '/login', component: Login, name: 'Login' },
   { path: '/', component: Home, name: 'Home' },
-//   { path: '*', redirect: '/' },
+  //   { path: '*', redirect: '/' },
 ];
 
 const router = createRouter({
@@ -17,4 +19,17 @@ const router = createRouter({
   routes,
 });
 
-createApp(App).use(router).mount('#app');
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('zigsToken');
+  if (to.name === 'Create' && !token) {
+    router.push({
+      name: 'Login',
+    });
+  } else {
+    next();
+  }
+});
+
+createApp(App)
+  .use(router)
+  .mount('#app');

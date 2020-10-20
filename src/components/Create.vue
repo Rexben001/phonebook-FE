@@ -1,5 +1,8 @@
 <template>
   <div class="hello">
+     <router-link to="/">
+      <p class="back"><i class="fa fa-angle-left" /> Home</p>
+    </router-link>
     <div class="">
       <h1>Add Contacts</h1>
       <div class="input">
@@ -61,6 +64,8 @@ export default {
       about: "",
       nummber: "",
       image: "",
+      token: localStorage.getItem('zigsToken'),
+
     };
   },
   methods: {
@@ -86,7 +91,10 @@ export default {
           Number: number,
           Image: image,
           About: about,
-        }
+        },
+        {headers: {
+          Authorization: `Bearer ${this.token}`
+        }}
       );
       if (data.ID) {
         window.location.href = "/";
@@ -94,17 +102,6 @@ export default {
       console.log("submit form>>", data);
     },
   },
-  //   async mounted() {
-  //     this.isLoading = true;
-  //     const { data } = await axios.get(
-  //       "https://phone-book-rexben.herokuapp.com/contacts"
-  //     );
-
-  //     if (data.success) {
-  //       this.values = data.data;
-  //       this.allValues = data.data;
-  //     }
-  //   },
 };
 </script>
 
@@ -152,6 +149,14 @@ button {
   width: 80%;
   font-size: 1.2rem;
   border-radius: 8px;
+}
+.fa-angle-left {
+  font-size: 2.5rem;
+}
+.back {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-top: .5rem;
 }
 @media screen and (min-width: 600px) {
   .hello {

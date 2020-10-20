@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div class="head">
+    <div class="head" :class="token?' head loginMode':'head'">
       <h1>ZIGS Phonebook</h1>
       <div class="search">
         <input
@@ -52,6 +52,8 @@ export default {
       isLoading: false,
       search: '',
       allValues: [],
+            token: localStorage.getItem('zigsToken'),
+
     };
   },
   async mounted() {
@@ -160,6 +162,10 @@ input:focus {
   background: white;
   width: 100%;
   box-sizing: border-box;
+  left: 0;
+}
+.loginMode {
+  top: 60px;
 }
 .total {
   font-weight: bold;
