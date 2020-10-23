@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div class="head" :class="token?' head loginMode':'head'">
+    <div class="head" :class="token ? ' head loginMode' : 'head'">
       <h1>ZIGS Phonebook</h1>
       <div class="search">
         <input
@@ -21,6 +21,13 @@
       </p>
       <div v-bind:key="contact.ID" v-for="contact in values">
         <router-link :to="`/details/${contact.ID}`" class="info">
+          <i v-if="token" class="fa fa-edit"></i>
+          <i
+            v-if="token"
+            class="fa fa-trash"
+            @click.prevent="deleteContact(contact.ID)"
+          ></i>
+
           <img :src="contact.Image" />
           <div>
             <p><i class="fa fa-user-circle"></i> {{ contact.Name }}</p>
@@ -52,8 +59,7 @@ export default {
       isLoading: false,
       search: '',
       allValues: [],
-            token: localStorage.getItem('zigsToken'),
-
+      token: localStorage.getItem('zigsToken'),
     };
   },
   async mounted() {
@@ -90,6 +96,24 @@ export default {
         this.values = this.allValues;
       }
     },
+    async deleteContact(id) {
+      console.log('this>>>', localStorage.getItem('zigsToken'));
+      try {
+        const { data } = await axios.delete(
+          `https://phone-book-rexben.herokuapp.com/contacts/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+          }
+        );
+        console.log('data>>>', data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
@@ -118,6 +142,7 @@ a {
   border-radius: 8px;
   box-shadow: 3px 3px 5px 6px#ddd;
   margin: 1.5rem 0;
+  position: relative;
 }
 img {
   width: 40%;
@@ -159,10 +184,11 @@ input:focus {
   position: fixed;
   top: 0px;
   margin: 0 auto;
-  background: white;
+  background: white !important;
   width: 100%;
   box-sizing: border-box;
   left: 0;
+  z-index: 300;
 }
 .loginMode {
   top: 60px;
@@ -176,6 +202,19 @@ input:focus {
 .total > span {
   color: rgb(143, 143, 143);
 }
+
+.fa-edit,
+.fa-trash {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  color: red;
+}
+.fa-edit {
+  color: rgb(83, 83, 223);
+  right: 30px;
+  top: 8px;
+}
 @media screen and (min-width: 600px) {
   .hello {
     width: 600px;
@@ -183,6 +222,7 @@ input:focus {
   }
   .head {
     width: 600px;
+    left: 35%;
   }
 }
 </style>

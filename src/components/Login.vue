@@ -1,7 +1,7 @@
 <template>
   <form class="login">
         <router-link to="/">
-      <p class="back"><i class="fa fa-angle-left" /> go back to home</p>
+      <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
     <p class="details">Login</p>
     <p class="error">{{ error }}</p>
@@ -35,8 +35,9 @@ export default {
             email: this.email,
           }
         );
+        console.log('data>>', data)
         localStorage.setItem('zigsToken', data.token);
-        window.location.href = '/';
+        if(data.token) window.location.href = '/';
       } catch (error) {
         this.error = error.response.data.message;
         this.isLoading = false;
@@ -79,7 +80,7 @@ button:focus {
   outline: 0px;
 }
 p:first-child {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 a {
   text-decoration: none;
@@ -107,6 +108,7 @@ a:hover {
   font-weight: 700;
   /* font-size: 1.5rem; */
   text-align: left;
+  margin: 1rem;
 }
 @media only screen and (max-width: 700px) {
   form {
