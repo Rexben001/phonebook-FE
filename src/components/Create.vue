@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-     <router-link to="/">
+    <router-link to="/">
       <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
     <div class="">
@@ -51,40 +51,39 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
-  name: "Create",
-  data: function () {
+  name: 'Create',
+  data: function() {
     return {
       values: [],
       isLoading: false,
-      name: "",
-      email: "",
-      about: "",
-      nummber: "",
-      image: "",
+      name: '',
+      email: '',
+      about: '',
+      nummber: '',
+      image: '',
       token: localStorage.getItem('zigsToken'),
-
     };
   },
   methods: {
-    handleImage: function (event) {
+    handleImage: function(event) {
       const file = event.target.files[0];
-      console.log("file>>>", file);
       this.image = file;
     },
     async submitForm() {
       const imageFile = new FormData();
-      imageFile.append("file", this.image);
-      imageFile.append("upload_preset", "lcxc1pn1");
+      imageFile.append('file', this.image);
+      imageFile.append('upload_preset', 'daqfl6qw');
       this.image = await axios
-        .post("https://api.cloudinary.com/v1_1/rexben/upload", imageFile)
+        .post('https://api.cloudinary.com/v1_1/rexben/upload', imageFile)
         .then((res) => res.data.secure_url)
-        .catch((e) => console.log(">>>>>>>", e));
+        .catch((e) => console.log('>>>>>>>', e));
       const { name, email, about, number, image } = this;
+
       const { data } = await axios.post(
-        "https://phone-book-rexben.herokuapp.com/contacts",
+        'https://phone-book-rexben.herokuapp.com/contacts',
         {
           Name: name,
           Email: email,
@@ -92,14 +91,15 @@ export default {
           Image: image,
           About: about,
         },
-        {headers: {
-          Authorization: `Bearer ${this.token}`
-        }}
+        {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        }
       );
       if (data.ID) {
-        window.location.href = "/";
+        window.location.href = '/';
       }
-      console.log("submit form>>", data);
     },
   },
 };
@@ -156,7 +156,7 @@ button {
 .back {
   font-weight: 700;
   font-size: 1.5rem;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 @media screen and (min-width: 600px) {
   .hello {

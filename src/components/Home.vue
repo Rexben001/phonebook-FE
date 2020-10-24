@@ -97,7 +97,6 @@ export default {
       }
     },
     async deleteContact(id) {
-      console.log('this>>>', localStorage.getItem('zigsToken'));
       try {
         const { data } = await axios.delete(
           `https://phone-book-rexben.herokuapp.com/contacts/${id}`,
@@ -110,7 +109,9 @@ export default {
           }
         );
         console.log('data>>>', data);
+        window.location.reload(false);
       } catch (error) {
+        window.location.reload(false);
         console.log(error);
       }
     },
