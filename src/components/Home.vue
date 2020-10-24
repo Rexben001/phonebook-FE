@@ -21,7 +21,9 @@
       </p>
       <div v-bind:key="contact.ID" v-for="contact in values">
         <router-link :to="`/details/${contact.ID}`" class="info">
-          <i v-if="token" class="fa fa-edit"></i>
+          <router-link :to="`/edit/${contact.ID}`">
+            <i v-if="token" class="fa fa-edit"></i>
+          </router-link>
           <i
             v-if="token"
             class="fa fa-trash"

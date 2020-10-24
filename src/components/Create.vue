@@ -4,7 +4,8 @@
       <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
     <div class="">
-      <h1>Add Contacts</h1>
+      <h1 v-if="id">Edit Contact</h1>
+      <h1 v-else>Add Contacts</h1>
       <div class="input">
         <p>Full Name</p>
         <input
@@ -44,6 +45,7 @@
           accept="image/*"
           v-on:change="handleImage"
         />
+        <img v-if="id" :src="image" />
       </div>
       <button @click.prevent="submitForm">Submit Form</button>
     </div>
@@ -62,9 +64,10 @@ export default {
       name: '',
       email: '',
       about: '',
-      nummber: '',
+      number: '',
       image: '',
       token: localStorage.getItem('zigsToken'),
+      id: this.$route.params.id,
     };
   },
   methods: {
@@ -82,25 +85,63 @@ export default {
         .catch((e) => console.log('>>>>>>>', e));
       const { name, email, about, number, image } = this;
 
-      const { data } = await axios.post(
-        'https://phone-book-rexben.herokuapp.com/contacts',
-        {
-          Name: name,
-          Email: email,
-          Number: number,
-          Image: image,
-          About: about,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
+      if (!this.id) {
+        const { data } = await axios.post(
+          'https://phone-book-rexben.herokuapp.com/contacts',
+          {
+            Name: name,
+            Email: email,
+            Number: number,
+            Image: image,
+            About: about,
           },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        );
+        if (data.ID) {
+          window.location.href = '/';
         }
-      );
-      if (data.ID) {
-        window.location.href = '/';
+      } else {
+        console.log('Got here now');
+        const { data } = await axios.put(
+          `https://phone-book-rexben.herokuapp.com/contacts/${this.id}`,
+          {
+            Name: name,
+            Email: email,
+            Number: number,
+            Image: image,
+            About: about,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        );
+        if (data.ID) {
+          window.location.href = '/';
+        }
       }
     },
+  },
+  async mounted() {
+    if (this.id) {
+      this.isLoading = true;
+      const { data } = await axios.get(
+        `https://phone-book-rexben.herokuapp.com/contacts/${this.id}`
+      );
+      if (data.success) {
+        const { Name, Email, About, Number, Image } = data.data[0];
+        this.name = Name;
+        this.email = Email;
+        this.about = About;
+        this.number = Number;
+        this.image = Image;
+      }
+    }
   },
 };
 </script>
@@ -157,6 +198,9 @@ button {
   font-weight: 700;
   font-size: 1.5rem;
   margin-top: 0.5rem;
+}
+img {
+  width: 20px;
 }
 @media screen and (min-width: 600px) {
   .hello {

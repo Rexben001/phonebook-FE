@@ -9,6 +9,7 @@ import Login from './components/Login.vue';
 const routes = [
   { path: '/details/:id', component: Details, name: 'Details' },
   { path: '/create', component: Create, name: 'Create' },
+  { path: '/edit/:id', component: Create, name: 'Update' },
   { path: '/login', component: Login, name: 'Login' },
   { path: '/', component: Home, name: 'Home' },
   //   { path: '*', redirect: '/' },
