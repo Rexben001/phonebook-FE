@@ -7,6 +7,9 @@
     <div v-else class="">
       <h1 v-if="id">Edit Contact</h1>
       <h1 v-else>Add Contacts</h1>
+
+      <p class="error">{{ error }}</p>
+
       <div class="input">
         <p>Full Name</p>
         <input
@@ -69,22 +72,43 @@ export default {
       image: '',
       token: localStorage.getItem('zigsToken'),
       id: this.$route.params.id,
+      error: '',
     };
   },
   methods: {
     handleImage: function(event) {
       const file = event.target.files[0];
+      console.log(typeof file);
+
       this.image = file;
     },
     async submitForm() {
+      if (!this.name) {
+        return (this.error = 'Full Name field is required');
+      }
+      if (!this.email) {
+        return (this.error = 'Email field is required');
+      }
+      if (!this.about) {
+        return (this.error = 'About field is required');
+      }
+      if (!this.number) {
+        return (this.error = 'Number field is required');
+      }
+      if (!this.image) {
+        return (this.error = 'Pls, pick an image');
+      }
+      console.log(typeof this.image);
       this.isLoading = true;
       const imageFile = new FormData();
       imageFile.append('file', this.image);
       imageFile.append('upload_preset', 'daqfl6qw');
-      this.image = await axios
-        .post('https://api.cloudinary.com/v1_1/rexben/upload', imageFile)
-        .then((res) => res.data.secure_url)
-        .catch((e) => console.log('>>>>>>>', e));
+      if (typeof this.image === 'string') {
+        this.image = await axios
+          .post('https://api.cloudinary.com/v1_1/rexben/upload', imageFile)
+          .then((res) => res.data.secure_url)
+          .catch((e) => console.log('>>>>>>>', e));
+      }
       const { name, email, about, number, image } = this;
 
       if (!this.id) {
@@ -215,6 +239,9 @@ img {
 }
 .fa-angle-left {
   font-size: 1.5rem;
+}
+.error {
+  color: red;
 }
 @media screen and (min-width: 600px) {
   .hello {

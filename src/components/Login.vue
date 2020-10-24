@@ -42,8 +42,10 @@ export default {
         console.log('data>>', data);
         localStorage.setItem('zigsToken', data.token);
         if (data.token) window.location.href = '/';
-        if (data.status === 404) this.error = data.message;
-        this.isLoading = false;
+        if (data.status === 404) {
+          this.error = data.message;
+          this.isLoading = false;
+        }
       } catch (error) {
         console.log('error.response.data.>>', error.response.data);
         this.error = error.response.data.message;
