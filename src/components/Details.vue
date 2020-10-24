@@ -1,26 +1,27 @@
 <template>
   <div class="details">
     <router-link to="/">
-      <p class="back"><i class="fa fa-angle-left" /> go back to home</p>
+      <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
-    <img
-      :src="contact.Image"
-    />
-    <p><strong>Name</strong> {{ contact.Name }}</p>
-    <p>
-      <a :href="`mailto:${contact.Email}`">
-        <strong>Email</strong> {{ contact.Email }}
-      </a>
-    </p>
-    <p>
-      <a :href="`tel:${contact.Number}`">
-        <strong>Phone</strong> {{ contact.Number }}
-      </a>
-    </p>
-    <p><strong>About Me</strong></p>
-    <p>
-      {{ contact.About }}
-    </p>
+    <img v-if="isLoading" class="loader" src="https://i.gifer.com/ZZ5H.gif" />
+    <div v-else>
+      <img :src="contact.Image" />
+      <p><strong>Name</strong> {{ contact.Name }}</p>
+      <p>
+        <a :href="`mailto:${contact.Email}`">
+          <strong>Email</strong> {{ contact.Email }}
+        </a>
+      </p>
+      <p>
+        <a :href="`tel:${contact.Number}`">
+          <strong>Phone</strong> {{ contact.Number }}
+        </a>
+      </p>
+      <p><strong>About Me</strong></p>
+      <p>
+        {{ contact.About }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -32,7 +33,7 @@ export default {
   data: function() {
     return {
       contact: '',
-      isLoading: false,
+      isLoading: true,
     };
   },
   async mounted() {
@@ -44,6 +45,7 @@ export default {
     if (data.success) {
       console.log(data.data[0]);
       this.contact = data.data[0];
+      this.isLoading = false;
     }
   },
 };
@@ -90,5 +92,10 @@ img {
 a {
   text-decoration: none;
   color: inherit;
+}
+.loader {
+  width: 50px;
+  height: 50px;
+  margin-top: 150px;
 }
 </style>

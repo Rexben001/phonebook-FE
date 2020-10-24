@@ -1,13 +1,17 @@
 <template>
-  <form class="login">
-        <router-link to="/">
+  <img v-if="isLoading" class="loader" src="https://i.gifer.com/ZZ5H.gif" />
+  <form v-else class="login">
+    <router-link to="/">
       <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
     <p class="details">Login</p>
+
+    <!-- <div v-else> -->
     <p class="error">{{ error }}</p>
     <input placeholder="Email address" v-model="email" type="email" />
     <input placeholder="Password" v-model="password" type="password" />
     <button id="submit" @click.prevent="submitted">Login</button>
+    <!-- </div> -->
   </form>
 </template>
 
@@ -28,17 +32,20 @@ export default {
     async submitted() {
       this.isLoading = true;
       try {
-        const {data} = await axios.post(
-        "https://phone-book-rexben.herokuapp.com/login",
+        const { data } = await axios.post(
+          'https://phone-book-rexben.herokuapp.com/login',
           {
             password: this.password,
             email: this.email,
           }
         );
-        console.log('data>>', data)
+        console.log('data>>', data);
         localStorage.setItem('zigsToken', data.token);
-        if(data.token) window.location.href = '/';
+        if (data.token) window.location.href = '/';
+        if (data.status === 404) this.error = data.message;
+        this.isLoading = false;
       } catch (error) {
+        console.log('error.response.data.>>', error.response.data);
         this.error = error.response.data.message;
         this.isLoading = false;
       }
@@ -109,6 +116,14 @@ a:hover {
   /* font-size: 1.5rem; */
   text-align: left;
   margin: 1rem;
+}
+.loader {
+  width: 50px;
+  height: 50px;
+  margin-top: 200px;
+}
+.error {
+  color: red;
 }
 @media only screen and (max-width: 700px) {
   form {

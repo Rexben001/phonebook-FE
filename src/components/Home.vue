@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div class="head" :class="token ? ' head loginMode' : 'head'">
+    <div :class="token ? ' head loginMode' : 'head'">
       <h1>ZIGS Phonebook</h1>
       <div class="search">
         <input
@@ -15,32 +15,35 @@
       </div>
     </div>
 
-    <div class="contacts">
+    <div :class="token ? 'contacts loginModeContact' : 'contacts'">
       <p class="total">
         Total Contacts<span> ({{ values.length }})</span>
       </p>
-      <div v-bind:key="contact.ID" v-for="contact in values">
-        <router-link :to="`/details/${contact.ID}`" class="info">
-          <router-link :to="`/edit/${contact.ID}`">
-            <i v-if="token" class="fa fa-edit"></i>
-          </router-link>
-          <i
-            v-if="token"
-            class="fa fa-trash"
-            @click.prevent="deleteContact(contact.ID)"
-          ></i>
+      <img v-if="isLoading" class="loader" src="https://i.gifer.com/ZZ5H.gif" />
+      <div v-else>
+        <div v-bind:key="contact.ID" v-for="contact in values">
+          <router-link :to="`/details/${contact.ID}`" class="info">
+            <router-link :to="`/edit/${contact.ID}`">
+              <i v-if="token" class="fa fa-edit"></i>
+            </router-link>
+            <i
+              v-if="token"
+              class="fa fa-trash"
+              @click.prevent="deleteContact(contact.ID)"
+            ></i>
 
-          <img :src="contact.Image" />
-          <div>
-            <p><i class="fa fa-user-circle"></i> {{ contact.Name }}</p>
-            <p><i class="fa fa-envelope"></i> {{ contact.Email }}</p>
-            <p>
-              <a :href="`tel:${contact.Number}`">
-                <i class="fa fa-phone"></i> {{ contact.Number }}</a
-              >
-            </p>
-          </div>
-        </router-link>
+            <img :src="contact.Image" />
+            <div>
+              <p><i class="fa fa-user-circle"></i> {{ contact.Name }}</p>
+              <p><i class="fa fa-envelope"></i> {{ contact.Email }}</p>
+              <p>
+                <a :href="`tel:${contact.Number}`">
+                  <i class="fa fa-phone"></i> {{ contact.Number }}</a
+                >
+              </p>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -58,7 +61,7 @@ export default {
   data: function() {
     return {
       values: [],
-      isLoading: false,
+      isLoading: true,
       search: '',
       allValues: [],
       token: localStorage.getItem('zigsToken'),
@@ -73,6 +76,7 @@ export default {
     if (data.success) {
       this.values = data.data;
       this.allValues = data.data;
+      this.isLoading = false;
     }
   },
   methods: {
@@ -100,6 +104,7 @@ export default {
     },
     async deleteContact(id) {
       try {
+        this.isLoading = true;
         const { data } = await axios.delete(
           `https://phone-book-rexben.herokuapp.com/contacts/${id}`,
           {
@@ -196,6 +201,9 @@ input:focus {
 .loginMode {
   top: 60px;
 }
+.loginModeContact {
+  margin-top: 29vh;
+}
 .total {
   font-weight: bold;
   text-align: left;
@@ -217,6 +225,11 @@ input:focus {
   color: rgb(83, 83, 223);
   right: 30px;
   top: 8px;
+}
+.loader {
+  width: 50px;
+  height: 50px;
+  margin-top: 150px;
 }
 @media screen and (min-width: 600px) {
   .hello {

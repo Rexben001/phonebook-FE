@@ -3,7 +3,8 @@
     <router-link to="/">
       <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
-    <div class="">
+    <img v-if="isLoading" class="loader" src="https://i.gifer.com/ZZ5H.gif" />
+    <div v-else class="">
       <h1 v-if="id">Edit Contact</h1>
       <h1 v-else>Add Contacts</h1>
       <div class="input">
@@ -76,6 +77,7 @@ export default {
       this.image = file;
     },
     async submitForm() {
+      this.isLoading = true;
       const imageFile = new FormData();
       imageFile.append('file', this.image);
       imageFile.append('upload_preset', 'daqfl6qw');
@@ -101,9 +103,10 @@ export default {
             },
           }
         );
-        if (data.ID) {
-          window.location.href = '/';
-        }
+        console.log('data>>>>', data);
+        // if (data.ID) {
+        //   window.location.href = '/';
+        // }
       } else {
         console.log('Got here now');
         const { data } = await axios.put(
@@ -129,7 +132,6 @@ export default {
   },
   async mounted() {
     if (this.id) {
-      this.isLoading = true;
       const { data } = await axios.get(
         `https://phone-book-rexben.herokuapp.com/contacts/${this.id}`
       );
@@ -201,6 +203,18 @@ button {
 }
 img {
   width: 20px;
+}
+.loader {
+  width: 50px;
+  height: 50px;
+  margin-top: 150px;
+}
+.back {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.fa-angle-left {
+  font-size: 1.5rem;
 }
 @media screen and (min-width: 600px) {
   .hello {

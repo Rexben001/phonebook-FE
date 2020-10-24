@@ -1,16 +1,15 @@
 <template>
-<nav v-if="token">
-    <router-link  to="/create">Create</router-link>
-        <button v-if="token" class="submit" @click.prevent="logout">Logout
-        </button>
-</nav>
+  <nav v-if="token">
+    <router-link to="/create">Create</router-link>
+    <button v-if="token" class="submit" @click.prevent="logout">Logout</button>
+  </nav>
   <router-view></router-view>
 </template>
 
 <script>
 export default {
   name: 'App',
-   data: function() {
+  data: function() {
     return {
       token: localStorage.getItem('zigsToken'),
     };
@@ -52,16 +51,15 @@ nav {
 nav a {
   padding: 10px 20px;
   font-weight: 700;
-    background: #f5f5f5;
+  background: #f5f5f5;
   color: green;
-  margin: .5rem;
+  margin: 0.5rem;
 }
 nav a:hover,
 .submit:hover {
   background: #f5f5f5;
   color: green;
 }
-
 
 .submit {
   border: none;
@@ -72,12 +70,16 @@ nav a:hover,
   cursor: pointer;
   outline: inherit;
   cursor: pointer;
-    font-weight: 700;
-      background: #f5f5f5;
+  font-weight: 700;
+  background: #f5f5f5;
   color: green;
-  margin: .5rem;
+  margin: 0.5rem;
 }
-
+/* .loader {
+  width: 50px;
+  height: 50px;
+  margin-top: 150px;
+} */
 @media screen and (min-width: 600px) {
   #app {
     width: 500px;
