@@ -128,6 +128,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.fa {
+  color: #727272;
+}
 h3 {
   margin: 40px 0 0;
 }
@@ -231,6 +234,10 @@ input:focus {
   height: 50px;
   margin-top: 150px;
 }
+p {
+  word-break: break-all;
+}
+
 @media screen and (min-width: 600px) {
   .hello {
     width: 600px;

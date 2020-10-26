@@ -98,4 +98,7 @@ a {
   height: 50px;
   margin-top: 150px;
 }
+strong {
+  color: #a3a3a3;
+}
 </style>
