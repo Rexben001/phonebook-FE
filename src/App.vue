@@ -1,8 +1,8 @@
 <template>
-  <nav v-if="token">
+  <!-- <nav v-if="token">
     <router-link to="/create">Create</router-link>
     <button v-if="token" class="submit" @click.prevent="logout">Logout</button>
-  </nav>
+  </nav> -->
   <router-view></router-view>
 </template>
 

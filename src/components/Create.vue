@@ -103,13 +103,15 @@ export default {
       const imageFile = new FormData();
       imageFile.append('file', this.image);
       imageFile.append('upload_preset', 'daqfl6qw');
-      if (typeof this.image === 'string') {
+      if (typeof this.image != 'string') {
         this.image = await axios
           .post('https://api.cloudinary.com/v1_1/rexben/upload', imageFile)
           .then((res) => res.data.secure_url)
           .catch((e) => console.log('>>>>>>>', e));
       }
       const { name, email, about, number, image } = this;
+
+      console.log('image>>>', image);
 
       if (!this.id) {
         const { data } = await axios.post(
@@ -120,17 +122,17 @@ export default {
             Number: number,
             Image: image,
             About: about,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
           }
+          // {
+          //   headers: {
+          //     Authorization: `Bearer ${this.token}`,
+          //   },
+          // }
         );
         console.log('data>>>>', data);
-        // if (data.ID) {
-        //   window.location.href = '/';
-        // }
+        if (data.ID) {
+          window.location.href = '/';
+        }
       } else {
         console.log('Got here now');
         const { data } = await axios.put(

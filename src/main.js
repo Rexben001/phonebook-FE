@@ -20,16 +20,16 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('zigsToken');
-  if (to.name === 'Create' && !token) {
-    router.push({
-      name: 'Login',
-    });
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   const token = localStorage.getItem('zigsToken');
+//   if (to.name === 'Create' && !token) {
+//     router.push({
+//       name: 'Login',
+//     });
+//   } else {
+//     next();
+//   }
+// });
 
 createApp(App)
   .use(router)
