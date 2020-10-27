@@ -35,7 +35,9 @@
             <img :src="contact.Image" />
             <div>
               <p><i class="fa fa-user-circle"></i> {{ contact.Name }}</p>
-              <p><i class="fa fa-envelope"></i> {{ contact.Email }}</p>
+              <p class="email">
+                <i class="fa fa-envelope"></i> {{ contact.Email }}
+              </p>
               <p>
                 <a :href="`tel:${contact.Number}`">
                   <i class="fa fa-phone"></i> {{ contact.Number }}</a
@@ -165,7 +167,10 @@ img {
   text-align: left;
 }
 p {
-  font-size: 1.05rem;
+  font-size: 1rem;
+  line-height: 1.2;
+  /* margin: 0;
+  padding: .2rem; */
 }
 .search {
   border: 1px solid #ddd;
@@ -201,7 +206,7 @@ input:focus {
   box-sizing: border-box;
   left: 0;
   z-index: 300;
-  margin-bottom: 22vh;
+  /* margin-bottom: 22vh; */
 }
 .loginMode {
   top: 60px;
@@ -252,6 +257,7 @@ p {
 .see:hover {
   color: #727272;
 }
+
 @media screen and (min-width: 600px) {
   .hello {
     width: 600px;
