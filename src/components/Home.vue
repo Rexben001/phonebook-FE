@@ -41,6 +41,7 @@
                   <i class="fa fa-phone"></i> {{ contact.Number }}</a
                 >
               </p>
+              <p class="see">See more...</p>
             </div>
           </router-link>
         </div>
@@ -157,14 +158,14 @@ a {
 }
 img {
   width: 40%;
-  height: 170px;
+  height: 180px;
 }
 .info > div {
   width: 50%;
   text-align: left;
 }
 p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 .search {
   border: 1px solid #ddd;
@@ -237,9 +238,18 @@ input:focus {
   margin-top: 150px;
 }
 p {
-  word-break: break-all;
+  word-break: break-word;
+}
+.see {
+  font-size: 0.9rem;
+  position: absolute;
+  bottom: -5px;
+  right: 10px;
 }
 
+.see:hover {
+  color: #727272;
+}
 @media screen and (min-width: 600px) {
   .hello {
     width: 600px;
