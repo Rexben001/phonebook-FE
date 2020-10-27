@@ -242,10 +242,11 @@ p {
 }
 .see {
   font-size: 0.9rem;
-  /* position: absolute;
-  bottom: -5px;
-  right: 10px; */
-  text-align: right;
+  position: absolute;
+  bottom: -10px;
+  right: 10px;
+  font-weight: 500;
+  /* text-align: right; */
 }
 
 .see:hover {
