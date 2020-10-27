@@ -189,7 +189,7 @@ input:focus {
   text-align: right;
 }
 .contacts {
-  margin-top: 22vh;
+  /* margin-top: 22vh; */
 }
 .head {
   position: fixed;
@@ -200,9 +200,11 @@ input:focus {
   box-sizing: border-box;
   left: 0;
   z-index: 300;
+  margin-bottom: 22vh;
 }
 .loginMode {
   top: 60px;
+  /* margin-bottom: 29vh; */
 }
 .loginModeContact {
   margin-top: 29vh;

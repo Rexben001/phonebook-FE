@@ -150,7 +150,8 @@ export default {
             },
           }
         );
-        if (data.ID) {
+        console.log(data);
+        if (data) {
           window.location.href = '/';
         }
       }
