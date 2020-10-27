@@ -190,7 +190,7 @@ input:focus {
   text-align: right;
 }
 .contacts {
-  /* margin-top: 22vh; */
+  margin-top: 22vh;
 }
 .head {
   position: fixed;
@@ -242,9 +242,10 @@ p {
 }
 .see {
   font-size: 0.9rem;
-  position: absolute;
+  /* position: absolute;
   bottom: -5px;
-  right: 10px;
+  right: 10px; */
+  text-align: right;
 }
 
 .see:hover {
