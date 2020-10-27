@@ -88,6 +88,7 @@ img {
 }
 .fa-angle-left {
   font-size: 1.5rem;
+  color: #1200a3;
 }
 a {
   text-decoration: none;
@@ -99,6 +100,7 @@ a {
   margin-top: 150px;
 }
 strong {
-  color: #a3a3a3;
+  color: #1200a3;
+  padding-right: 0.5rem;
 }
 </style>

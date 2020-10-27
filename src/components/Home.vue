@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div :class="token ? ' head loginMode' : 'head'">
-      <h1>ZIGS Phonebook</h1>
+      <h1><span>ZIGS</span> Phone<span>book</span></h1>
       <div class="search">
         <input
           placeholder="Search for contacts..."
@@ -132,7 +132,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .fa {
-  color: #727272;
+  color: #1200a3;
 }
 h3 {
   margin: 40px 0 0;
@@ -152,19 +152,23 @@ a {
 .info {
   display: flex;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: space-between;
   border-radius: 8px;
-  box-shadow: 3px 3px 5px 6px#ddd;
+  box-shadow: 3px 3px 5px 6px #e1e1e1;
   margin: 1.5rem 0;
   position: relative;
+  box-sizing: border-box;
 }
 img {
   width: 40%;
   height: 180px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 .info > div {
-  width: 50%;
+  width: 60%;
   text-align: left;
+  padding-left: 1rem;
 }
 p {
   font-size: 1rem;
@@ -173,7 +177,7 @@ p {
   padding: .2rem; */
 }
 .search {
-  border: 1px solid #ddd;
+  border: #1200a3 1px solid;
   color: rgb(81, 81, 81);
   width: 80%;
   margin: 0 auto;
@@ -193,6 +197,7 @@ input:focus {
 }
 .fa-search {
   text-align: right;
+  color: #1200a3;
 }
 .contacts {
   margin-top: 22vh;
@@ -222,7 +227,7 @@ input:focus {
 }
 
 .total > span {
-  color: rgb(143, 143, 143);
+  color: #1200a3;
 }
 
 .fa-edit,
@@ -251,11 +256,16 @@ p {
   bottom: -10px;
   right: 10px;
   font-weight: 500;
+  color: #1200a3;
   /* text-align: right; */
 }
 
 .see:hover {
   color: #727272;
+}
+
+h1 span {
+  color: #1200a3;
 }
 
 @media screen and (min-width: 600px) {

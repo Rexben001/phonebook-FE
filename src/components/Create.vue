@@ -196,7 +196,7 @@ input,
 textarea {
   border-radius: 8px;
   padding: 1rem;
-  border: 1px solid #ddd;
+  border: #1200a3 1px solid;
   width: 100%;
   box-sizing: border-box;
 }
@@ -215,10 +215,13 @@ p {
 button {
   padding: 0.5rem 1rem;
   border: 1px solid #ddd;
-  margin: 1.5rem;
+  margin: 1.5rem auto;
   width: 80%;
   font-size: 1.2rem;
   border-radius: 8px;
+  background: #1200a3;
+  color: white;
+  width: 100%;
 }
 .fa-angle-left {
   font-size: 2.5rem;
@@ -242,6 +245,7 @@ img {
 }
 .fa-angle-left {
   font-size: 1.5rem;
+  color: #1200a3;
 }
 .error {
   color: red;
