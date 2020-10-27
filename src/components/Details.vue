@@ -79,7 +79,7 @@ p {
 
 img {
   width: 100%;
-  height: 300px;
+  height: auto;
   border-radius: 7px;
 }
 .back {
