@@ -3,6 +3,14 @@
     <router-link to="/">
       <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
+      <typewriter
+        :speed="200"
+        :full-erase="true"
+        :interval="300"
+        :words="['Awesome!', 'Amazing!']"
+      >
+        Vue Typewriter is
+      </typewriter>
     <img v-if="isLoading" class="loader" src="https://i.gifer.com/ZZ5H.gif" />
     <div v-else>
       <img :src="contact.Image" />
@@ -12,6 +20,7 @@
           <strong>Email</strong> {{ contact.Email }}
         </a>
       </p>
+
       <p>
         <a :href="`tel:${contact.Number}`">
           <strong>Phone</strong> {{ contact.Number }}
@@ -27,6 +36,7 @@
 
 <script>
 import axios from 'axios';
+import Typewriter from 'vue-typewriter';
 
 export default {
   name: 'Details',
@@ -36,6 +46,7 @@ export default {
       isLoading: true,
     };
   },
+  components: { Typewriter },
   async mounted() {
     const { id } = this.$route.params;
     const { data } = await axios.get(
@@ -43,7 +54,6 @@ export default {
     );
 
     if (data.success) {
-      console.log(data.data[0]);
       this.contact = data.data[0];
       this.isLoading = false;
     }
