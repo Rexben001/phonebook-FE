@@ -4,27 +4,27 @@
       <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
     <img v-if="isLoading" class="loader" src="https://i.gifer.com/ZZ5H.gif" />
-    <div v-else>
-      <img :src="contact.Image" />
-      <p class="line-1 anim-typewriter">
-        <strong>Name</strong> {{ contact.Name }}
+    <div :class="isLoading ? 'disappear' : 'appear'">
+      <img v-if="contact.Image" :src="contact.Image" />
+      <p :style="display ? '' : ''">
+        <strong>Name</strong> <span id="name"></span>
       </p>
-      <p class="line-1 anim-typewriter">
-        <a :href="`mailto:${contact.Email}`">
-          <strong>Email</strong> {{ contact.Email }}
+      <p>
+        <a :href="`mailto:${email}`">
+          <strong>Email</strong> <span id="email"></span>
         </a>
       </p>
 
-      <p class="line-1 anim-typewriter">
-        <a :href="`tel:${contact.Number}`">
-          <strong>Phone</strong> {{ contact.Number }}
+      <p>
+        <a :href="`tel:${phone}`">
+          <strong>Phone</strong> <span id="phone"></span>
         </a>
       </p>
-      <p class="line-1 anim-typewriter"><strong>About Me</strong></p>
+      <p>
+        <strong>About Me</strong> <br />
+        <span id="about"></span>
+      </p>
     </div>
-    <p id="txtsss">
-      <!-- {{ contact.About }} -->
-    </p>
   </div>
 </template>
 
@@ -39,10 +39,21 @@ export default {
       isLoading: true,
       about: '',
       idx: 0,
+      idxName: 0,
+      idxEmail: 0,
+      idxPhone: 0,
+      name: '',
+      email: '',
+      phone: '',
     };
   },
   // components: { Typewriter },
   async mounted() {
+    document.getElementById('about').innerHTML = '';
+    document.getElementById('phone').innerHTML = '';
+    document.getElementById('email').innerHTML = '';
+    document.getElementById('name').innerHTML = '';
+
     const { id } = this.$route.params;
     const { data } = await axios.get(
       `https://phone-book-rexben.herokuapp.com/contacts/${id}`
@@ -51,21 +62,61 @@ export default {
     if (data.success) {
       this.contact = data.data[0];
       this.isLoading = false;
+
       this.about = this.contact.About;
-      document.getElementById('txtsss').innerHTML = '';
+      this.name = this.contact.Name;
+      this.email = this.contact.Email;
+      this.phone = this.contact.Number;
+
       this.typeWriter(this.about);
+      this.typeWriter2(this.name);
+      this.typeWriter3(this.email);
+      this.typeWriter4(this.phone);
     }
   },
   methods: {
     typeWriter: function(txt) {
       if (this.idx < txt.length) {
-        document.getElementById('txtsss').innerHTML += txt.charAt(this.idx);
+        document.getElementById('about').innerHTML += txt.charAt(this.idx);
         this.idx++;
         var that = this;
 
         setTimeout(function() {
           that.typeWriter(that.about);
-        }, 30);
+        }, 45);
+      }
+    },
+    typeWriter2: function(txt) {
+      if (this.idxName < txt.length) {
+        document.getElementById('name').innerHTML += txt.charAt(this.idxName);
+        this.idxName++;
+        var that = this;
+
+        setTimeout(function() {
+          that.typeWriter2(that.name);
+        }, 45);
+      }
+    },
+    typeWriter3: function(txt) {
+      if (this.idxEmail < txt.length) {
+        document.getElementById('email').innerHTML += txt.charAt(this.idxEmail);
+        this.idxEmail++;
+        var that = this;
+
+        setTimeout(function() {
+          that.typeWriter3(that.email);
+        }, 45);
+      }
+    },
+    typeWriter4: function(txt) {
+      if (this.idxPhone < txt.length) {
+        document.getElementById('phone').innerHTML += txt.charAt(this.idxPhone);
+        this.idxPhone++;
+        var that = this;
+
+        setTimeout(function() {
+          that.typeWriter4(that.phone);
+        }, 45);
       }
     },
   },
@@ -154,5 +205,12 @@ strong {
   to {
     border-right-color: transparent;
   }
+}
+
+.disappear {
+  opacity: 0;
+}
+.appear {
+  opacity: 1;
 }
 </style>

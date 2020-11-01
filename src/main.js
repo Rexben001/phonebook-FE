@@ -5,7 +5,6 @@ import Details from './components/Details.vue';
 import Home from './components/Home.vue';
 import Create from './components/Create.vue';
 import Login from './components/Login.vue';
-// import Typewriter from 'vue-typewriter';
 
 const routes = [
   { path: '/details/:id', component: Details, name: 'Details' },
@@ -38,5 +37,4 @@ const router = createRouter({
 
 const myApp = createApp(App);
 myApp.use(router);
-// myApp.use(Typewriter);
 myApp.mount('#app');
