@@ -30,7 +30,6 @@
 
 <script>
 import axios from 'axios';
-// import Typewriter from 'vue-typewriter';
 
 export default {
   name: 'Details',
@@ -53,7 +52,7 @@ export default {
       this.contact = data.data[0];
       this.isLoading = false;
       this.about = this.contact.About;
-
+      document.getElementById('txtsss').innerHTML = '';
       this.typeWriter(this.about);
     }
   },
