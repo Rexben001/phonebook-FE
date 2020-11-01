@@ -3,40 +3,34 @@
     <router-link to="/">
       <p class="back"><i class="fa fa-angle-left" /> Home</p>
     </router-link>
-      <typewriter
-        :speed="200"
-        :full-erase="true"
-        :interval="300"
-        :words="['Awesome!', 'Amazing!']"
-      >
-        Vue Typewriter is
-      </typewriter>
     <img v-if="isLoading" class="loader" src="https://i.gifer.com/ZZ5H.gif" />
     <div v-else>
       <img :src="contact.Image" />
-      <p><strong>Name</strong> {{ contact.Name }}</p>
-      <p>
+      <p class="line-1 anim-typewriter">
+        <strong>Name</strong> {{ contact.Name }}
+      </p>
+      <p class="line-1 anim-typewriter">
         <a :href="`mailto:${contact.Email}`">
           <strong>Email</strong> {{ contact.Email }}
         </a>
       </p>
 
-      <p>
+      <p class="line-1 anim-typewriter">
         <a :href="`tel:${contact.Number}`">
           <strong>Phone</strong> {{ contact.Number }}
         </a>
       </p>
-      <p><strong>About Me</strong></p>
-      <p>
-        {{ contact.About }}
-      </p>
+      <p class="line-1 anim-typewriter"><strong>About Me</strong></p>
     </div>
+    <p id="txtsss">
+      <!-- {{ contact.About }} -->
+    </p>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import Typewriter from 'vue-typewriter';
+// import Typewriter from 'vue-typewriter';
 
 export default {
   name: 'Details',
@@ -44,9 +38,11 @@ export default {
     return {
       contact: '',
       isLoading: true,
+      about: '',
+      idx: 0,
     };
   },
-  components: { Typewriter },
+  // components: { Typewriter },
   async mounted() {
     const { id } = this.$route.params;
     const { data } = await axios.get(
@@ -56,7 +52,23 @@ export default {
     if (data.success) {
       this.contact = data.data[0];
       this.isLoading = false;
+      this.about = this.contact.About;
+
+      this.typeWriter(this.about);
     }
+  },
+  methods: {
+    typeWriter: function(txt) {
+      if (this.idx < txt.length) {
+        document.getElementById('txtsss').innerHTML += txt.charAt(this.idx);
+        this.idx++;
+        var that = this;
+
+        setTimeout(function() {
+          that.typeWriter(that.about);
+        }, 30);
+      }
+    },
   },
 };
 </script>
@@ -112,5 +124,36 @@ a {
 strong {
   color: #1200a3;
   padding-right: 0.5rem;
+}
+
+.line-1 {
+  /* position: relative; */
+  width: 100%;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateY(-50%);
+}
+
+/* Animation */
+.anim-typewriter {
+  animation: typewriter 4s steps(44) 0s 1 normal both,
+    blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(255, 255, 255, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
 }
 </style>
