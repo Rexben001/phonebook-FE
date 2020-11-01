@@ -22,7 +22,16 @@
       <img v-if="isLoading" class="loader" src="https://i.gifer.com/ZZ5H.gif" />
       <div v-else>
         <div v-bind:key="contact.ID" v-for="contact in values">
-          <router-link :to="`/details/${contact.ID}`" class="info">
+          <router-link
+            :to="`/details/${contact.ID}`"
+            class="info"
+            data-aos="fade-up"
+            data-aos-offset="100"
+            data-aos-delay="50"
+            data-aos-duration="500"
+            data-aos-easing="linear"
+            data-aos-mirror="true"
+          >
             <router-link :to="`/edit/${contact.ID}`">
               <i v-if="token" class="fa fa-edit"></i>
             </router-link>
@@ -55,12 +64,15 @@
 <script>
 import axios from 'axios';
 import Fuse from 'fuse.js';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
 
 export default {
   name: 'Home',
   props: {
     msg: String,
   },
+
   data: function() {
     return {
       values: [],
@@ -127,6 +139,7 @@ export default {
     },
   },
 };
+AOS.init();
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
