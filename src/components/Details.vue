@@ -21,7 +21,7 @@
           <a :href="`tel:${phone}`"> <i class="fa fa-phone"></i></a
         ></span>
         <span>
-          <a :href="`sms:${phone}?body=this is the text message to send`">
+          <a :href="`sms:${phone}?body=Hello ${name}, I...`">
             <i class="fa fa-file-text"></i></a
         ></span>
       </p>
