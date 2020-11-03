@@ -16,9 +16,14 @@
       </p>
 
       <p>
-        <a :href="`tel:${phone}`">
-          <strong>Phone</strong> <span id="phone"></span>
-        </a>
+        <strong>Phone</strong> <span id="phone"></span>
+        <span>
+          <a :href="`tel:${phone}`"> <i class="fa fa-phone"></i></a
+        ></span>
+        <span>
+          <a :href="`sms:${phone}?body=this is the text message to send`">
+            <i class="fa fa-file-text"></i></a
+        ></span>
       </p>
       <p>
         <strong>About Me</strong> <br />
@@ -212,5 +217,10 @@ strong {
 }
 .appear {
   opacity: 1;
+}
+
+.fa {
+  color: #1200a3;
+  margin-left: 0.5rem;
 }
 </style>
